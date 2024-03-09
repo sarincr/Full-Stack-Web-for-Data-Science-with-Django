@@ -1,0 +1,17 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{% static 'styleone.css' %}">
+<body>
+    <ul>
+    {% for x in y %}
+    {% if x.first_name == "John" %}
+    <p>
+        <li>{{ x.first_name }} {{x.last_name}}</li>
+    </p>
+    {% endif %} 
+  {% endfor %} 
+</ul>
+</body>
+</html>                  
+

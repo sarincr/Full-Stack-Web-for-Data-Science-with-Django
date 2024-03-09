@@ -1,0 +1,16 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{% static 'styleone.css' %}">
+<body>
+
+    {% for i in y %} 
+    <div class="row"> 
+        {{ i }} 
+    </div> 
+{% endfor %} 
+
+<p>In myfirst.css you can see what the stylesheet looks like.</p>
+
+</body>
+</html>                  

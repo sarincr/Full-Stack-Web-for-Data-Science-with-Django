@@ -1,0 +1,42 @@
+from appone.models import Company
+a = Company(
+      first_name = "John",
+    last_name = "Adams",
+    age = 22,
+    address = "Texas",
+    salary = 25000
+         )
+
+a.save()
+
+b = Company(
+      first_name = "Mary",
+    last_name = "John",
+    age = 42,
+    address = "Texas",
+    salary = 50000
+         )
+
+b.save()
+
+
+
+c = Company(
+      first_name = "Johnson",
+    last_name = "Gray",
+    age = 29,
+    address = "Texas",
+    salary = 75000
+         )
+
+c.save()
+
+
+Company.objects.all()
+
+Company.objects.values()
+
+
+d=Company.objects.values()
+
+d[0]

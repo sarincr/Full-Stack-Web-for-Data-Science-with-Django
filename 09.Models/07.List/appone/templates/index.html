@@ -1,0 +1,14 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<link rel="stylesheet" href="{% static 'styleone.css' %}">
+<body>
+    <ul>
+    {% for x in y %}
+    <p>
+        <li>{{ x.first_name }} {{x.last_name}}</li>
+    </p>
+  {% endfor %} 
+</ul>
+</body>
+</html>                  
