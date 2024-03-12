@@ -1,0 +1,414 @@
+from appone.models import Company
+
+emp1 = Company(first_name='John', last_name='Doe', age=30, address='123 Main St', salary=50000)
+
+emp1.save()
+
+Company.objects.all()
+
+Company.objects.all().values()
+
+
+
+
+# Sample data
+sample_data = [
+    {'first_name': 'John', 'last_name': 'Doe', 'age': 25, 'address': '123 Main St', 'salary': 50000},
+    {'first_name': 'Jane', 'last_name': 'Smith', 'age': 30, 'address': '456 Oak St', 'salary': 60000},
+    {'first_name': 'Michael', 'last_name': 'Johnson', 'age': 28, 'address': '789 Pine St', 'salary': 55000}
+]
+
+# Create Company instances
+for data in sample_data:
+    Company.objects.create(**data)
+
+
+Company.objects.filter(age__lt=500).delete()
+
+
+for data in sample_data:
+    company_instance = Company(**data)
+    company_instance.save()
+
+
+
+Company.objects.all().values()
+
+sample_data = [
+    {'first_name': 'John', 'last_name': 'Doe', 'age': 25, 'address': '123 Main St', 'salary': 50000},
+    {'first_name': 'Jane', 'last_name': 'Smith', 'age': 30, 'address': '456 Oak St', 'salary': 60000},
+    {'first_name': 'Michael', 'last_name': 'Johnson', 'age': 28, 'address': '789 Pine St', 'salary': 55000},
+    {'first_name': 'David', 'last_name': 'Brown', 'age': 35, 'address': '101 Elm St', 'salary': 65000},
+    {'first_name': 'Sarah', 'last_name': 'Williams', 'age': 27, 'address': '202 Maple St', 'salary': 52000},
+    {'first_name': 'James', 'last_name': 'Jones', 'age': 32, 'address': '303 Cedar St', 'salary': 58000},
+    {'first_name': 'Emily', 'last_name': 'Taylor', 'age': 29, 'address': '404 Walnut St', 'salary': 57000},
+    {'first_name': 'Daniel', 'last_name': 'Anderson', 'age': 31, 'address': '505 Birch St', 'salary': 62000},
+    {'first_name': 'Jessica', 'last_name': 'Martinez', 'age': 26, 'address': '606 Spruce St', 'salary': 53000},
+    {'first_name': 'Christopher', 'last_name': 'Garcia', 'age': 33, 'address': '707 Fir St', 'salary': 64000},
+    {'first_name': 'Ashley', 'last_name': 'Wilson', 'age': 34, 'address': '808 Pine St', 'salary': 59000},
+    {'first_name': 'Matthew', 'last_name': 'Lopez', 'age': 36, 'address': '909 Oak St', 'salary': 67000},
+    {'first_name': 'Amanda', 'last_name': 'Hernandez', 'age': 28, 'address': '1010 Cedar St', 'salary': 54000},
+    {'first_name': 'Joshua', 'last_name': 'Gonzalez', 'age': 29, 'address': '1111 Elm St', 'salary': 56000},
+    {'first_name': 'Megan', 'last_name': 'Perez', 'age': 30, 'address': '1212 Maple St', 'salary': 61000},
+    {'first_name': 'Robert', 'last_name': 'Robinson', 'age': 31, 'address': '1313 Walnut St', 'salary': 63000},
+    {'first_name': 'Lauren', 'last_name': 'Clark', 'age': 32, 'address': '1414 Birch St', 'salary': 66000},
+    {'first_name': 'Justin', 'last_name': 'Lewis', 'age': 33, 'address': '1515 Spruce St', 'salary': 68000},
+    {'first_name': 'Kayla', 'last_name': 'Lee', 'age': 34, 'address': '1616 Fir St', 'salary': 69000},
+    {'first_name': 'Brandon', 'last_name': 'Walker', 'age': 35, 'address': '1717 Pine St', 'salary': 70000},
+]
+
+# Create Company instances
+for data in sample_data:
+    company_instance = Company(**data)
+    company_instance.save()
+
+
+Company.objects.all().values()
+
+
+result = Company.objects.filter(first_name__startswith='J')
+print(result.values())
+
+
+result = Company.objects.filter(age__lt=30)
+print(result.values())
+
+
+result = Company.objects.filter(salary__gte=60000)
+print(result.values())
+
+
+result = Company.objects.filter(last_name__icontains='son')
+print(result.values())
+
+
+result = Company.objects.filter(address__endswith='St')
+print(result.values())
+
+
+result = Company.objects.filter(age__range=(25, 30))
+print(result.values())
+
+
+result = Company.objects.filter(first_name='John', age=25)
+print(result.values())
+
+
+from django.db.models import Q
+
+# Example 8: Filter by salary less than 55000 or greater than 65000 (OR condition)
+result = Company.objects.filter(Q(salary__lt=55000) | Q(salary__gt=65000))
+print(result.values())
+
+
+result = Company.objects.filter(Q(last_name__startswith='J') | Q(age__lt=30))
+print(result.values())
+
+result = Company.objects.filter(Q(address__icontains='St') | Q(address__icontains='Ave'))
+print(result.values())
+
+Filter by age descending order (ordering):
+result = Company.objects.all().order_by('-age')
+print(result.values())
+
+result = Company.objects.filter(salary__range=(55000, 65000)).order_by('-age')
+print(result.values())
+
+result = Company.objects.filter(address__icontains='St', age__gt=25).order_by('salary')
+print(result.values())
+
+from django.db.models import Avg
+average_age = Company.objects.aggregate(avg_age=Avg('age'))['avg_age']
+result = Company.objects.filter(age__gt=average_age)
+print(result.values())
+
+
+from django.db.models import F
+result = Company.objects.filter(age__pow=2 > 600)
+print(result.values())
+
+result = Company.objects.exclude(first_name='John')
+print(result.values())
+
+result = Company.objects.filter(first_name__iexact='john')
+print(result.values())
+
+
+from django.db.models import Avg
+
+result = Company.objects.filter(salary__gte=60000).aggregate(avg_age=Avg('age'))
+print(result)
+
+
+
+
+result = Company.objects.raw('SELECT * FROM appone_company WHERE age > %s', [30])
+print([obj.__dict__ for obj in result])
+
+result = Company.objects.filter(address__icontains='Main').order_by('-age', '-salary')
+print(result.values())
+
+result = Company.objects.filter(first_name__regex=r'^[A-Z][a-z]+$', age__gt=30)
+print(result.values())
+
+
+Filter by last name case-insensitive and age less than 30:
+
+
+result = Company.objects.filter(last_name__iexact='doe', age__lt=30)
+print(result.values())
+
+from django.db.models.functions import Sqrt
+
+result = Company.objects.annotate(age_sqrt=Sqrt('age')).filter(age_sqrt__lt=6)
+print(result.values())
+
+
+result = Company.objects.filter(Q(first_name='John') | Q(address='456 Oak St'))
+print(result.values())
+
+
+from django.db.models import Avg
+
+average_salary = Company.objects.aggregate(avg_salary=Avg('salary'))['avg_salary']
+result = Company.objects.filter(salary__gt=average_salary)
+
+
+from django.db.models import Min
+
+minimum_age = Company.objects.aggregate(min_age=Min('age'))['min_age']
+result = Company.objects.filter(age__lt=minimum_age)
+
+
+try:
+    duplicate_company = Company(first_name='John', last_name='Doe', age=28, address='123 Main St', salary=55000)
+    duplicate_company.full_clean()
+    duplicate_company.save()
+except ValidationError as e:
+    print(e)
+
+
+
+john = Company.objects.get(first_name='John', last_name='Doe')
+john.salary = 74000
+john.save()
+
+
+megan = Company.objects.get(first_name='Megan', last_name='Perez')
+megan.age += 1
+megan.save()
+
+
+lauren = Company.objects.get(first_name='Lauren', last_name='Clark')
+lauren.age = 33
+lauren.salary = 70000
+lauren.save()
+
+employees_lt_30 = Company.objects.filter(age__lt=30)
+employees_lt_30.update(salary=F('salary') - 3000)
+
+Company.objects.filter(age__gte=30, salary__gt=60000).order_by('-salary').values('first_name', 'last_name', 'address')
+
+Company.objects.filter(last_name='Smith').update(salary=65000, address='Updated Address')
+
+
+avg_salary = Company.objects.aggregate(Avg('salary'))['salary__avg']
+Company.objects.filter(address__contains='Oak St').update(salary=F('salary') * 1.05 * avg_salary)
+
+
+Company.objects.order_by('age').values('first_name', 'last_name').first(), Company.objects.order_by('-age').values('first_name', 'last_name').first()
+
+Company.objects.exclude(first_name='John', last_name='Doe').values('first_name', 'last_name')
+
+
+Retrieve the names of employees with the second and third-highest salaries.
+
+
+salaries = Company.objects.order_by('-salary').values_list('salary', flat=True)[1:3]
+Company.objects.filter(salary__in=salaries).values('first_name', 'last_name')
+
+Update the salary of employees aged 28 to be 15% higher than their current salary.
+
+
+
+Company.objects.filter(age=28).update(salary=F('salary') * 1.15)
+
+Retrieve the count of employees whose last name is 'Williams' or 'Johnson'.
+
+
+
+Company.objects.filter(last_name__in=['Williams', 'Johnson']).count()
+
+Delete all employees with ages divisible by 5 and whose last name contains 'e'.
+
+
+Company.objects.filter(age__mod=5, last_name__contains='e').delete()
+
+
+emp1.delete()
+
+Company.objects.all().values()
+
+Selected_Object_to_Delete = Company.objects.first()
+Selected_Object_to_Delete.delete()
+
+Company.objects.all().values()
+
+
+Selected_Object_to_Delete = Company.objects.get(id=4)
+
+Selected_Object_to_Delete.delete()
+
+Company.objects.all().values()
+
+Company.objects.filter(age__lt=25).delete()
+
+Company.objects.all().values()
+
+
+Company.objects.all().delete()
+
+
+Company.objects.all().values()
+
+
+
+
+
+Retrieve the names and salaries of employees who have the highest salary in the company and work at the same address as the employee named 'Jessica Martinez'.
+
+
+
+max_salary = Company.objects.aggregate(Max('salary'))['salary__max']
+jessica_address = Company.objects.filter(first_name='Jessica', last_name='Martinez').values('address')
+Company.objects.filter(salary=max_salary, address__in=jessica_address).values('first_name', 'last_name', 'salary')
+
+Update the salary of employees aged 30 or above to be the average salary of employees with the same last name, and increase their age by 1.
+
+
+
+avg_salary_by_last_name = Company.objects.values('last_name').annotate(avg_salary=Avg('salary'))
+Company.objects.filter(age__gte=30).update(
+    salary=Subquery(avg_salary_by_last_name.filter(last_name=OuterRef('last_name')).values('avg_salary')[:1]),
+    age=F('age') + 1
+)
+
+Retrieve the names and addresses of employees whose salary is greater than the average salary of employees aged 32 or below and whose last name is not 'Smith'.
+
+
+
+avg_salary_under_32 = Company.objects.filter(age__lte=32).aggregate(Avg('salary'))['salary__avg']
+Company.objects.filter(salary__gt=avg_salary_under_32, last_name__ne='Smith').values('first_name', 'last_name', 'address')
+
+Update the salary of employees with an address containing 'Oak St' to be 10% higher than the salary of employees with the same first name.
+
+
+
+oak_st_employees = Company.objects.filter(address__contains='Oak St')
+subquery_max_salary_by_name = Company.objects.values('first_name').annotate(max_salary=Max('salary'))
+oak_st_employees.update(
+    salary=F(subquery_max_salary_by_name.filter(first_name=OuterRef('first_name')).values('max_salary')[:1]) * 1.1
+)
+
+Retrieve the names and ages of employees whose salary is within 20% of the salary of employees with the lowest salary in the company.
+
+
+
+min_salary = Company.objects.aggregate(Min('salary'))['salary__min']
+lower_bound = min_salary * 0.8
+upper_bound = min_salary * 1.2
+Company.objects.filter(salary__range=(lower_bound, upper_bound)).values('first_name', 'last_name', 'age')
+
+Update the salary of employees aged 28 to be 5% lower than the salary of the employee with the same last name aged 30.
+
+
+
+subquery_salary_aged_30 = Company.objects.filter(age=30).values('last_name', 'salary')[:1]
+Company.objects.filter(age=28).update(
+    salary=F(subquery_salary_aged_30.filter(last_name=OuterRef('last_name')).values('salary')[:1]) * 0.95
+)
+
+Retrieve the names and addresses of employees who have the same salary as employees with the last name 'Brown' and work at the same address as employees aged 32.
+
+
+
+subquery_brown_salary = Company.objects.filter(last_name='Brown').values('salary')[:1]
+subquery_employees_aged_32 = Company.objects.filter(age=32).values('address')
+Company.objects.filter(salary=subquery_brown_salary, address__in=subquery_employees_aged_32).values('first_name', 'last_name', 'address')
+
+Update the salary of employees whose last name is 'Lee' to be 10% higher than the salary of employees with the same last name aged 34.
+
+
+
+subquery_salary_aged_34 = Company.objects.filter(last_name='Lee', age=34).values('salary')[:1]
+Company.objects.filter(last_name='Lee').update(
+    salary=F(subquery_salary_aged_34) * 1.1
+)
+
+Retrieve the names and ages of employees who have the same salary as the average salary of employees aged 31 and work at an address containing 'Walnut St'.
+
+
+
+avg_salary_aged_31 = Company.objects.filter(age=31).aggregate(Avg('salary'))['salary__avg']
+subquery_employees_walnut_st = Company.objects.filter(address__contains='Walnut St').values('salary')[:1]
+Company.objects.filter(salary=avg_salary_aged_31, salary=subquery_employees_walnut_st).values('first_name', 'last_name', 'age')
+
+Update the salary of employees whose last name is 'Garcia' to be the maximum salary in the company, and set their age to the average age of employees with the same salary.
+
+
+
+max_salary = Company.objects.aggregate(Max('salary'))['salary__max']
+subquery_avg_age_by_salary = Company.objects.values('salary').annotate(avg_age=Avg('age'))
+Company.objects.filter(last_name='Garcia').update(
+    salary=max_salary,
+    age=Subquery(subquery_avg_age_by_salary.filter(salary=OuterRef('salary')).values('avg_age')[:1])
+)
+
+
+
+
+
+
+from django.db.models import Subquery, OuterRef, Avg
+
+# Subquery to get the average salary
+average_salary_subquery = Company.objects.filter(
+    age__gte=30
+).values('age').annotate(
+    avg_salary=Avg('salary')
+).values('avg_salary')
+
+# Query to get companies with salary higher than the average
+companies_with_higher_salary = Company.objects.filter(
+    salary__gt=Subquery(average_salary_subquery)
+)
+
+# Print the result
+print(companies_with_higher_salary.values())
+
+
+
+from django.db.models import Subquery, Avg, OuterRef, Exists
+
+# Define a subquery to calculate the average salary
+average_salary_subquery = Company.objects.filter(
+    age__gt=30
+).values('age').annotate(
+    avg_salary=Avg('salary')
+).values('avg_salary')[:1]
+
+# Use Exists() to create a subquery and reference Subquery directly
+companies_above_avg_salary = Company.objects.filter(
+    Exists(
+        Company.objects.filter(
+            salary__gt=Subquery(average_salary_subquery),
+            pk=OuterRef('pk')  # Assuming 'pk' is the primary key field name
+        )
+    )
+)
+
+# Execute the query
+result = companies_above_avg_salary.values()
+
+# Print the result
+print(result)
