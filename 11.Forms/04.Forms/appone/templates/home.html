@@ -1,0 +1,30 @@
+{% extends 'form.html' %}
+
+
+{% load static %}
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <header>Hello</header>
+    <main>
+
+      {% block content %}
+      
+      <form action="results">  
+        <label for="name">Enter name</label><br>  
+        <input type="text" id="nameid" name="x"><br>  
+        <label for="pass">Enter Password</label><br>  
+        <input type="Password" id="passid" name="y"><br>  
+        <input type="submit" value="submit">  
+    </form>  
+
+      {% endblock %}
+
+      
+    </main>
+    <footer></footer>
+  </body>
+</html>
